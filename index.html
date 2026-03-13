@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.E.R.V.I.R. | Gestión de Talentos 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>S.E.R.V.I.R. <span onclick="toggleAdmin()" style="cursor:help">🚀</span></h1>
+        <p class="subtitle">Mapeo Maestro de Dones y Talentos 2026</p>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-text">Progreso del Diagnóstico: <span id="progreso-val">0%</span></div>
+        <div class="progress-bar"><div id="bar" style="width: 0%"></div></div>
+    </div>
+
+    <div id="seccion-admin" class="admin-panel" style="display:none;">
+        <p class="admin-title">PANEL ADMINISTRATIVO</p>
+        <input type="file" id="inputExcel" accept=".xlsx">
+        <p style="font-size: 0.7rem; color: #38bdf8;">Cargue el padrón para habilitar la búsqueda por DNI</p>
+    </div>
+
+    <form class="form-card" id="formRegistro">
+        <div class="input-grid">
+            <div class="group">
+                <label class="top-label">DNI</label>
+                <div class="search-box">
+                    <input type="text" id="dni" class="main-input" maxlength="8" required placeholder="DNI">
+                    <button type="button" class="btn-buscar" onclick="buscarDNI()">BUSCAR</button>
+                </div>
+            </div>
+            <div class="group"><label class="top-label">Nombres</label><input type="text" id="nombres" class="main-input" required disabled></div>
+            <div class="group"><label class="top-label">Ap. Paterno</label><input type="text" id="apPaterno" class="main-input" required disabled></div>
+            <div class="group"><label class="top-label">Ap. Materno</label><input type="text" id="apMaterno" class="main-input" required disabled></div>
+        </div>
+
+        <div class="input-grid">
+            <div class="group"><label class="top-label">Nacimiento</label><input type="date" id="fechaNac" class="main-input" required disabled onchange="calcularEdad()"></div>
+            <div class="group"><label class="top-label">Edad</label><input type="text" id="edad" class="main-input" readonly placeholder="-"></div>
+            <div class="group">
+                <label class="top-label">Sexo</label>
+                <select id="sexo" class="main-input" required disabled>
+                    <option value="">Seleccione</option>
+                    <option value="MASCULINO">MASCULINO</option>
+                    <option value="FEMENINO">FEMENINO</option>
+                </select>
+            </div>
+            <div class="group"><label class="top-label">Celular</label><input type="text" id="celular" class="main-input" maxlength="9" required disabled></div>
+            <div class="group"><label class="top-label">Dirección</label><input type="text" id="direccion" class="main-input" required disabled></div>
+        </div>
+
+        <div class="main-layout" id="panelTalentos" style="display:none;">
+            <div class="rectangles-container">
+                <div class="category-rect active" onclick="nav('cat-s', this)">🥗 S - SALUD</div>
+                <div class="category-rect" onclick="nav('cat-e', this)">📖 E - ENSEÑANZA</div>
+                <div class="category-rect" onclick="nav('cat-r1', this)">🤝 R - RELACIONES</div>
+                <div class="category-rect" onclick="nav('cat-v', this)">📱 V - VIRTUAL</div>
+                <div class="category-rect" onclick="nav('cat-i', this)">🏗️ I - INFRAEST.</div>
+                <div class="category-rect" onclick="nav('cat-r2', this)">💰 R - RECURSOS</div>
+            </div>
+
+            <div class="options-panel">
+                <p class="panel-hint">SELECCIONE MÁXIMO 3 POR CATEGORÍA:</p>
+                
+                <div id="cat-s" class="cat-content active">
+                    <label class="hab-row"><input type="checkbox" name="Salud[]" value="Nutrición"><div class="hab-info"><b>Nutrición</b><span>Recetas saludables y talleres de cocina.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Salud[]" value="Personal de salud"><div class="hab-info"><b>Personal de salud</b><span>Profesionales del sector salud.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Salud[]" value="Natural"><div class="hab-info"><b>Natural</b><span>Uso de plantas medicinales.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Salud[]" value="Prevención"><div class="hab-info"><b>Prevención</b><span>Temperancia y prevención de adicciones.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Salud[]" value="Bienestar"><div class="hab-info"><b>Bienestar</b><span>Ejercicios físicos y caminatas.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Salud[]" value="Apoyo Sanitario"><div class="hab-info"><b>Apoyo Sanitario</b><span>Logística y orden en ferias.</span></div></label>
+                </div>
+
+                <div id="cat-e" class="cat-content">
+                    <label class="hab-row"><input type="checkbox" name="Ensenanza[]" value="Biblia"><div class="hab-info"><b>Biblia</b><span>Instructor de estudios bíblicos.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Ensenanza[]" value="Maestro"><div class="hab-info"><b>Maestro</b><span>Maestro de menores y Escuela Sabática.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Ensenanza[]" value="Púlpito"><div class="hab-info"><b>Púlpito</b><span>Predicación y dirección de cultos.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Ensenanza[]" value="Capacitación"><div class="hab-info"><b>Capacitación</b><span>Entrenamiento en discipulado.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Ensenanza[]" value="Profecía"><div class="hab-info"><b>Profecía</b><span>Explicación de Daniel y Apocalipsis.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Ensenanza[]" value="Mentoría"><div class="hab-info"><b>Mentoría</b><span>Guía para jóvenes y adolescentes.</span></div></label>
+                </div>
+
+                <div id="cat-r1" class="cat-content">
+                    <label class="hab-row"><input type="checkbox" name="Relaciones[]" value="Visitación"><div class="hab-info"><b>Visitación</b><span>Visitas a hogares y enfermos.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Relaciones[]" value="Hospitalidad"><div class="hab-info"><b>Hospitalidad</b><span>Anfitrión de Grupos Pequeños.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Relaciones[]" value="Intercesión"><div class="hab-info"><b>Intercesión</b><span>Red de oración intercesora.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Relaciones[]" value="Recepción"><div class="hab-info"><b>Recepción</b><span>Bienvenida y atención en el templo.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Relaciones[]" value="Vínculo Público"><div class="hab-info"><b>Vínculo Público</b><span>Relación con autoridades.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Relaciones[]" value="Idiomas"><div class="hab-info"><b>Idiomas</b><span>Traducción y señas.</span></div></label>
+                </div>
+
+                <div id="cat-v" class="cat-content">
+                    <label class="hab-row"><input type="checkbox" name="Virtual[]" value="Redes"><div class="hab-info"><b>Redes</b><span>Gestión de Facebook, IG y WhatsApp.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Virtual[]" value="Audio/Video"><div class="hab-info"><b>Audio/Video</b><span>Consolas, sonido y edición.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Virtual[]" value="Diseño"><div class="hab-info"><b>Diseño</b><span>Creación de folletos y anuncios.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Virtual[]" value="Sistemas"><div class="hab-info"><b>Sistemas</b><span>Excel, bases de datos y formularios.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Virtual[]" value="Fotografía"><div class="hab-info"><b>Fotografía</b><span>Documentación de eventos.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Virtual[]" value="Redacción"><div class="hab-info"><b>Redacción</b><span>Noticias y comunicados.</span></div></label>
+                </div>
+
+                <div id="cat-i" class="cat-content">
+                    <label class="hab-row"><input type="checkbox" name="Infra[]" value="Mantenimiento"><div class="hab-info"><b>Mantenimiento</b><span>Electricidad, pintura y reparaciones.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Infra[]" value="Logística"><div class="hab-info"><b>Logística</b><span>Montaje y coordinación de eventos.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Infra[]" value="Limpieza"><div class="hab-info"><b>Limpieza</b><span>Cuidado estético del templo.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Infra[]" value="Decoración"><div class="hab-info"><b>Decoración</b><span>Arreglo de altar y eventos.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Infra[]" value="Seguridad"><div class="hab-info"><b>Seguridad</b><span>Orden y vigilancia.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Infra[]" value="Transporte"><div class="hab-info"><b>Transporte</b><span>Conductor para traslados.</span></div></label>
+                </div>
+
+                <div id="cat-r2" class="cat-content">
+                    <label class="hab-row"><input type="checkbox" name="Recursos[]" value="Música Vocal"><div class="hab-info"><b>Música Vocal</b><span>Canto solo, grupo o coro.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Recursos[]" value="Instrumental"><div class="hab-info"><b>Instrumental</b><span>Piano, guitarra, etc.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Recursos[]" value="Finanzas"><div class="hab-info"><b>Finanzas</b><span>Contabilidad y tesorería.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Recursos[]" value="Manualidades"><div class="hab-info"><b>Manualidades</b><span>Tejido, bordado y arte.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Recursos[]" value="Secretaría"><div class="hab-info"><b>Secretaría</b><span>Actas, archivos y redacción.</span></div></label>
+                    <label class="hab-row"><input type="checkbox" name="Recursos[]" value="Filantropía"><div class="hab-info"><b>Filantropía</b><span>Gestión de donaciones externas.</span></div></label>
+                </div>
+                
+                <button type="submit" id="btnFinalizar" class="btn-final">GUARDAR⚡</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="modalDiag">
+    <div class="diag-card">
+        <h2 id="diagNombre"></h2>
+        <div id="diagContenido"></div>
+        <div class="modal-buttons">
+            <button onclick="location.reload()" class="btn-new">NUEVO REGISTRO</button>
+            <button onclick="window.print()" class="btn-print">IMPRIMIR CERTIFICADO</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
