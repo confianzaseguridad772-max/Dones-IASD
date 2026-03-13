@@ -170,3 +170,54 @@ h1 {
     #modalDiag, #modalDiag * { visibility: visible; }
     #modalDiag { position: absolute; left: 0; top: 0; background: white; }
     .modal-buttons { display: none; }
+/* MEJORAS ESPECÍFICAS PARA MÓVILES */
+@media (max-width: 768px) {
+    body {
+        padding: 5px; /* Menos espacio fuera */
+    }
+
+    .form-card {
+        padding: 15px; /* Más aire dentro de la tarjeta */
+    }
+
+    /* Inputs más grandes para dedos */
+    .main-input, .btn-buscar {
+        font-size: 16px !important; 
+        padding: 14px;
+    }
+
+    /* Convertir el menú lateral en una fila horizontal */
+    .main-layout {
+        flex-direction: column; /* Apilar categorías sobre opciones */
+        gap: 15px;
+    }
+
+    .rectangles-container {
+        width: 100%;
+        flex-direction: row; /* Ponerlos uno al lado del otro */
+        overflow-x: auto; /* Permitir scroll si hay muchos */
+        padding-bottom: 10px;
+        white-space: nowrap;
+    }
+
+    .category-rect {
+        padding: 10px 15px;
+        font-size: 0.75rem;
+        flex: 0 0 auto; /* No dejar que se encojan */
+    }
+
+    /* Hacer que las opciones ocupen todo el ancho */
+    .options-panel {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .hab-row {
+        padding: 15px; /* Más espacio para tocar el checkbox */
+    }
+
+    .hab-info span {
+        font-size: 0.8rem; /* Un poco más grande para leer mejor */
+        color: #cbd5e1; /* Un gris más claro */
+    }
+}
