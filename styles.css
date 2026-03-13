@@ -165,59 +165,60 @@ h1 {
     margin-top: 10px;
 }
 
+/* ESTILOS DE IMPRESIÓN */
 @media print {
     body * { visibility: hidden; }
     #modalDiag, #modalDiag * { visibility: visible; }
-    #modalDiag { position: absolute; left: 0; top: 0; background: white; }
+    #modalDiag { position: absolute; left: 0; top: 0; background: white; width: 100%; height: auto; }
     .modal-buttons { display: none; }
+}
+
 /* MEJORAS ESPECÍFICAS PARA MÓVILES */
 @media (max-width: 768px) {
-    body {
-        padding: 5px; /* Menos espacio fuera */
-    }
-
-    .form-card {
-        padding: 15px; /* Más aire dentro de la tarjeta */
-    }
-
-    /* Inputs más grandes para dedos */
-    .main-input, .btn-buscar {
+    body { padding: 5px; }
+    h1 { font-size: 1.8rem; }
+    .form-card { padding: 15px; }
+    
+    .main-input, .btn-buscar { 
         font-size: 16px !important; 
-        padding: 14px;
+        padding: 12px; 
     }
-
-    /* Convertir el menú lateral en una fila horizontal */
-    .main-layout {
-        flex-direction: column; /* Apilar categorías sobre opciones */
-        gap: 15px;
+    
+    .main-layout { 
+        flex-direction: column; 
+        gap: 15px; 
+        padding-top: 15px;
     }
-
-    .rectangles-container {
-        width: 100%;
-        flex-direction: row; /* Ponerlos uno al lado del otro */
-        overflow-x: auto; /* Permitir scroll si hay muchos */
-        padding-bottom: 10px;
+    
+    .rectangles-container { 
+        width: 100%; 
+        flex-direction: row; 
+        overflow-x: auto; 
+        padding-bottom: 10px; 
         white-space: nowrap;
+        gap: 8px;
     }
-
-    .category-rect {
-        padding: 10px 15px;
-        font-size: 0.75rem;
-        flex: 0 0 auto; /* No dejar que se encojan */
+    
+    .category-rect { 
+        padding: 8px 12px; 
+        font-size: 0.75rem; 
+        flex: 0 0 auto; 
     }
-
-    /* Hacer que las opciones ocupen todo el ancho */
-    .options-panel {
-        width: 100%;
-        padding: 15px;
+    
+    .options-panel { 
+        width: 100%; 
+        padding: 10px; 
+        min-height: auto;
     }
-
-    .hab-row {
-        padding: 15px; /* Más espacio para tocar el checkbox */
+    
+    .cat-content {
+        grid-template-columns: 1fr; /* Una sola columna en móvil */
     }
-
-    .hab-info span {
-        font-size: 0.8rem; /* Un poco más grande para leer mejor */
-        color: #cbd5e1; /* Un gris más claro */
+    
+    .hab-row { 
+        padding: 14px; 
     }
+    
+    .hab-info b { font-size: 0.85rem; }
+    .hab-info span { font-size: 0.75rem; color: #cbd5e1; }
 }
