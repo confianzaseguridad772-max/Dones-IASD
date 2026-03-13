@@ -21,16 +21,16 @@ const manualRef = {
 function obtenerCargosSugeridos(registro) {
     let cargos = [];
     const s = (val) => String(val || "");
-    if (s(registro.Salud).includes("Nutrición") || s(registro.Salud).includes("Personal de salud")) cargos.push("Director de Salud");
-    if (s(registro.Ensenanza).includes("Biblia") || s(registro.Ensenanza).includes("Profecía")) cargos.push("Instructor Bíblico / Anciano");
-    if (s(registro.Ensenanza).includes("Maestro")) cargos.push("Maestro de Escuela Sabática / Menores");
-    if (s(registro.Relaciones).includes("Visitación") || s(registro.Relaciones).includes("Hospitalidad")) cargos.push("Director de Grupos Pequeños / Diaconisa");
-    if (s(registro.Relaciones).includes("Recepción")) cargos.push("Director de Recepción / Hospitalidad");
-    if (s(registro.Virtual).includes("Redes") || s(registro.Virtual).includes("Audio/Video")) cargos.push("Director de Comunicaciones");
-    if (s(registro.Infra).includes("Mantenimiento") || s(registro.Infra).includes("Seguridad")) cargos.push("Jefe de Diáconos / Mayordomía");
+    if (s(registro.Salud).includes("Nutrición") || s(registro.Salud).includes("Personal de salud")) cargos.push("Enfasis en Salud");
+    if (s(registro.Ensenanza).includes("Biblia") || s(registro.Ensenanza).includes("Profecía")) cargos.push("Instructor Bíblico y/o Anciano");
+    if (s(registro.Ensenanza).includes("Maestro")) cargos.push("Maestro de Escuela Sabática / Consejero de Aventureros");
+    if (s(registro.Relaciones).includes("Visitación") || s(registro.Relaciones).includes("Hospitalidad")) cargos.push("Lider de Grupos Pequeño / Diaconisa");
+    if (s(registro.Relaciones).includes("Recepción")) cargos.push("Recepción / Hospitalidad");
+    if (s(registro.Virtual).includes("Redes") || s(registro.Virtual).includes("Audio/Video")) cargos.push("Comunicaciones / Publicaciones");
+    if (s(registro.Infra).includes("Mantenimiento") || s(registro.Infra).includes("Seguridad")) cargos.push("Diácono / Mayordomía");
     if (s(registro.Recursos).includes("Finanzas") || s(registro.Recursos).includes("Secretaría")) cargos.push("Tesorero / Secretario");
-    if (s(registro.Recursos).includes("Música Vocal") || s(registro.Recursos).includes("Instrumental")) cargos.push("Director de Música");
-    if (s(registro.Ensenanza).includes("Mentoría")) cargos.push("Director de Jóvenes / Conquistadores");
+    if (s(registro.Recursos).includes("Música Vocal") || s(registro.Recursos).includes("Instrumental")) cargos.push("Música");
+    if (s(registro.Ensenanza).includes("Mentoría")) cargos.push("Director de Jóvenes / Consejero de Conquistadores");
     return cargos.length > 0 ? cargos : ["Colaborador de Ministerio"];
 }
 
