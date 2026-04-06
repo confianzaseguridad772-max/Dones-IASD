@@ -1,7 +1,7 @@
 // ==========================================
 // 1. CONFIGURACIÓN
 // ==========================================
-const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbyMTvPSScbiQ-d67ydnk6EfgWkD11MklVClrh8Z56BD2AJVNB5j6CvpWsHT7CvpF5Kbmg/exec"; 
+const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxp4NqfQtutqNT0n5xUT3mMCOyANlAeFhxkAgZnIM2nvlapi6zwbuSMRWYGHCsmjhE-qQ/exec"; 
 let padronData = [];
 let metodoRegistro = "Manual"; 
 const fields = ['nombres', 'apPaterno', 'apMaterno', 'fechaNac', 'sexo', 'celular', 'direccion'];
